@@ -11,7 +11,6 @@ public class Piso {
 
     private int x;
     private int y;
-
     private int ancho;
     private int alto;
 
@@ -47,7 +46,6 @@ public class Piso {
     // GET X
 
     public int getX() {
-
         return x;
     }
 
@@ -55,7 +53,6 @@ public class Piso {
     // GET Y
 
     public int getY() {
-
         return y;
     }
 
@@ -63,7 +60,6 @@ public class Piso {
     // GET ANCHO
 
     public int getAncho() {
-
         return ancho;
     }
 
@@ -71,7 +67,6 @@ public class Piso {
     // GET ALTO
 
     public int getAlto() {
-
         return alto;
     }
 }

@@ -50,9 +50,28 @@ public class Juego extends InterfaceJuego
         pisos[6] = new Piso(2700, 550, 400, 30); // Donde se ubica el castillo
 
         for (int i = 7; i < pisos.length; i++) {
-            int alturaAleatoria = (Math.random() < 0.5) ? 450 : 350;
-            int xAleatorio = 400 + (i - 7) * 400 + (int)(Math.random() * 120);
-            pisos[i] = new Piso(xAleatorio, alturaAleatoria, 160, 30);
+
+            int alturaAleatoria;
+
+            if (Math.random() < 0.5) {
+
+                alturaAleatoria = 450;
+
+            } else {
+
+                alturaAleatoria = 350;
+            }
+
+            int xAleatorio =
+                    400 +
+                    (i - 7) * 400 +
+                    (int)(Math.random() * 120);
+
+            pisos[i] = new Piso(
+                    xAleatorio,
+                    alturaAleatoria,
+                    160,
+                    30);
         }
         
         // ENEMIGOS
