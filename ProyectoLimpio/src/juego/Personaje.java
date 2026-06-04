@@ -22,14 +22,14 @@ public class Personaje {
     // velocidad vertical
     private double velocidadY = 0;
 
-    // detectar si está en piso
+    // detectar si está en pisos
     private boolean enPiso = false;
 
     // gravedad
     private final double GRAVEDAD = 0.6;
 
     // fuerza salto
-    private final double SALTO = -15;
+    private final double SALTO = -17;
 
     // velocidad horizontal
     private final int VELOCIDAD = 5;
@@ -110,7 +110,7 @@ public class Personaje {
     // COLISION PISO
   
 
-    public void tocarPiso(Piso piso) {
+    public void EnPiso(Piso piso) {
 
         // bordes personaje
         int izquierdaPersonaje = x - ancho / 2;
@@ -153,7 +153,7 @@ public class Personaje {
  
     // COLISION COSTADOS
 
-    public void tocarCostado(Piso piso) {
+    public void EnCostado(Piso piso) {
 
         // bordes personaje
         int izquierdaPersonaje = x - ancho / 2;
@@ -201,7 +201,7 @@ public class Personaje {
 
     // COLISION TECHO
 
-    public void tocarTecho(Piso piso) {
+    public void EnTecho(Piso piso) {
 
         // bordes personaje
         int izquierdaPersonaje = x - ancho / 2;

@@ -15,11 +15,9 @@ public class Enemigo {
 
         this.x = x;
         this.y = y;
-
         this.velocidad = velocidad;
     }
 
-    
     // MOVER
 
     public void mover() {
@@ -27,7 +25,6 @@ public class Enemigo {
         x += velocidad;
     }
 
-    
     // MOVER IZQUIERDA
 
     public void moverIzquierda(int valor) {
@@ -35,7 +32,6 @@ public class Enemigo {
         x -= valor;
     }
 
-    
     // DIBUJAR
 
     public void dibujar(Entorno e) {
@@ -43,7 +39,6 @@ public class Enemigo {
         e.dibujarCirculo(x, y, 20, Color.RED);
     }
 
-    
     // COLISION PERSONAJE
 
     public boolean colisiona(Personaje p) {
@@ -52,15 +47,13 @@ public class Enemigo {
                Math.abs(y - p.getY()) < 40;
     }
 
-    
     // FUERA PANTALLA
 
     public boolean fueraPantalla() {
 
-        return x < -100 || x > 900;
+        return x < -150 || x > 950;
     }
 
-    
     // GET X
 
     public int getX() {
@@ -68,7 +61,6 @@ public class Enemigo {
         return x;
     }
 
-    
     // GET Y
 
     public int getY() {

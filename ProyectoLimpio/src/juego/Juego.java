@@ -39,41 +39,22 @@ public class Juego extends InterfaceJuego
 
         // CREAR ISLAS
 
-        pisos = new Piso[12];
+        pisos = new Piso[13];
 
-        // piso inferior izquierdo
-        pisos[0] = new Piso(150,550,250,30);
+        pisos[0] = new Piso(150, 550, 250, 30);
+        pisos[1] = new Piso(550, 550, 250, 30);
+        pisos[2] = new Piso(950, 550, 220, 30);
+        pisos[3] = new Piso(1350, 550, 220, 30);
+        pisos[4] = new Piso(1750, 550, 250, 30);
+        pisos[5] = new Piso(2150, 550, 220, 30);
+        pisos[6] = new Piso(2700, 550, 400, 30); // Donde se ubica el castillo
 
-        // piso inferior derecho
-        pisos[1] = new Piso(500,550,250,30);
-
-        // isla media izquierda
-        pisos[2] = new Piso(250,430,220,30);
-
-        // isla media derecha
-        pisos[3] = new Piso(600,430,220,30);
-
-        // isla superior
-        pisos[4] = new Piso(430,310,220,30);
-
-        // NUEVAS ISLAS
-
-        // camino hacia el castillo
-
-        pisos[5] = new Piso(900,520,220,30);
-
-        pisos[6] = new Piso(1200,430,220,30);
-
-        pisos[7] = new Piso(1450,340,220,30);
-
-        pisos[8] = new Piso(1700,500,220,30);
-
-        pisos[9] = new Piso(2000,420,220,30);
-
-        pisos[10] = new Piso(2300,320,220,30);
-
-        pisos[11] = new Piso(2600,520,300,30);
-
+        for (int i = 7; i < pisos.length; i++) {
+            int alturaAleatoria = (Math.random() < 0.5) ? 450 : 350;
+            int xAleatorio = 400 + (i - 7) * 400 + (int)(Math.random() * 120);
+            pisos[i] = new Piso(xAleatorio, alturaAleatoria, 160, 30);
+        }
+        
         // ENEMIGOS
 
         enemigos = new Enemigo[10];
@@ -219,15 +200,15 @@ public class Juego extends InterfaceJuego
 
             // colision arriba
 
-            personaje.tocarPiso(pisos[i]);
+            personaje.	EnPiso(pisos[i]);
 
             // colision costados
 
-            personaje.tocarCostado(pisos[i]);
+            personaje.EnCostado(pisos[i]);
 
             // colision techo
 
-            personaje.tocarTecho(pisos[i]);
+            personaje.EnTecho(pisos[i]);
         }
 
         // LIMITES PANTALLA
@@ -245,7 +226,7 @@ public class Juego extends InterfaceJuego
 
         generarEnemigos();
 
-        // ENEMIGOS
+     // ENEMIGOS
 
         for (int i = 0; i < enemigos.length; i++) {
 
@@ -270,6 +251,9 @@ public class Juego extends InterfaceJuego
                     disparo != null &&
                     disparo.colisiona(enemigos[i])) {
 
+                    int xItem = enemigos[i].getX();
+                    int yItem = enemigos[i].getY();
+
                     enemigos[i] = null;
 
                     disparo = null;
@@ -279,8 +263,8 @@ public class Juego extends InterfaceJuego
                     if (Math.random() < 0.3) {
 
                         item = new Item(
-                                personaje.getX(),
-                                personaje.getY());
+                                xItem,
+                                yItem);
                     }
                 }
 
@@ -356,75 +340,80 @@ public class Juego extends InterfaceJuego
 
     // GENERAR ENEMIGOS
 
-    private void generarEnemigos()
-    {
-        int vivos = 0;
+//GENERAR ENEMIGOS
 
-        // contar enemigos vivos
+private void generarEnemigos()
+{
+ int vivos = 0;
 
-        for (int i = 0; i < enemigos.length; i++) {
+ // contar enemigos vivos
 
-            if (enemigos[i] != null) {
+ for (int i = 0; i < enemigos.length; i++) {
 
-                vivos++;
-            }
-        }
+     if (enemigos[i] != null) {
 
-        // mantener enemigos vivos
+         vivos++;
+     }
+ }
 
-        if (vivos < 5) {
+ // mantener enemigos vivos
 
-            for (int i = 0; i < enemigos.length; i++) {
+ if (vivos < 5) {
 
-                if (enemigos[i] == null) {
+     for (int i = 0; i < enemigos.length; i++) {
 
-                    // elegir isla aleatoria
+         if (enemigos[i] == null) {
 
-                    int pisoRandom =
-                            (int)(Math.random() * pisos.length);
+             int xEnemigo;
+             int yEnemigo;
+             int velocidad;
 
-                    Piso piso = pisos[pisoRandom];
+             // elegir borde aleatorio
 
-                    // posición aleatoria sobre isla
+             if (Math.random() < 0.5) {
 
-                    int xEnemigo =
-                            piso.getX()
-                            - piso.getAncho() / 2
-                            + (int)(Math.random() * piso.getAncho());
+                 // aparece por la izquierda
 
-                    // arriba del piso
+                 xEnemigo = -30;
 
-                    int yEnemigo =
-                            piso.getY()
-                            - piso.getAlto() / 2
-                            - 20;
+                 velocidad = 2;
 
-                    // dirección aleatoria
+             } else {
 
-                    int velocidad;
+                 // aparece por la derecha
 
-                    if (Math.random() < 0.5) {
+                 xEnemigo = entorno.ancho() + 30;
 
-                        velocidad = 2;
+                 velocidad = -2;
+             }
 
-                    } else {
+             // elegir altura aleatoria basada en una isla
 
-                        velocidad = -2;
-                    }
+             int pisoRandom =
+                     (int)(Math.random() * pisos.length);
 
-                    // crear enemigo
+             Piso piso = pisos[pisoRandom];
 
-                    enemigos[i] =
-                            new Enemigo(
-                                    xEnemigo,
-                                    yEnemigo,
-                                    velocidad);
+             // arriba del piso
 
-                    break;
-                }
-            }
-        }
-    }
+             yEnemigo =
+                     piso.getY()
+                     - piso.getAlto() / 2
+                     - 20;
+
+             // crear enemigo
+
+             enemigos[i] =
+                     new Enemigo(
+                             xEnemigo,
+                             yEnemigo,
+                             velocidad);
+
+             break;
+         }
+     }
+ }
+}
 
     @SuppressWarnings("unused")
 
